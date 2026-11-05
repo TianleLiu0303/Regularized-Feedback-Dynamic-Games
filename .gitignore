@@ -1,0 +1,28 @@
+# Local environments and dependencies
+.venv/
+venv/
+.deps/
+
+# Python build and test artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Local data and experiment outputs
+/data/
+/outputs/
+/cache/
+/tmp/
+
+# Local editor and credential files
+.vscode/
+.idea/
+.env
+.env.*
+.DS_Store
+Thumbs.db

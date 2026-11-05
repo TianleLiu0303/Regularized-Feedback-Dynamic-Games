@@ -1,0 +1,7 @@
+{
+  "scenario": "interhub", "dt": 0.1, "horizon": 50,
+  "outer_iterations": 30, "step_size": 0.5, "tolerance": 0.001,
+  "reference_source": "demonstration", "coefficient_mode": "adaptive",
+  "lambda_min": 0.5, "lambda_max": 5.0, "lambda_sigma": 1.2,
+  "hessian_floor": 0.001, "seed": 42
+}

@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "contextual-dynamic-game"
+version = "0.4.0"
+description = "Contextual costs, retrieved demonstration references and PA-KL receding-horizon planning."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+train = ["torch>=2.2"]
+interhub = ["shapely>=2.0"]
+plot = ["matplotlib>=3.7"]
+
+[project.scripts]
+contextual-experiment = "contextual_game.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

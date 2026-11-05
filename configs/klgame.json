@@ -1,0 +1,6 @@
+{
+  "scenario": "interhub", "dt": 0.1, "horizon": 50,
+  "outer_iterations": 30, "step_size": 0.5, "tolerance": 0.001,
+  "reference_source": "cost", "coefficient_mode": "fixed",
+  "fixed_lambda": 2.0, "temperature": 0.99, "hessian_floor": 0.001, "seed": 42
+}

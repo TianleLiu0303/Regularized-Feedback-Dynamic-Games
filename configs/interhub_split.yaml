@@ -1,0 +1,16 @@
+# A split recipe, not a claim that actual events have already been partitioned.
+# Run `contextual-experiment split` to write the populated YAML manifest.
+version: 1
+kind: scene_group_split_plan
+seed: 42
+group_key:
+  - dataset
+  - original_scene_id
+fractions:
+  train: 0.70
+  validation: 0.15
+  test: 0.15
+shuffle: numpy.PCG64
+allocation: largest_remainder_nonempty
+# Scene groups are sorted before shuffling. All events in a scene stay together.
+# Actual event counts depend on filtering; no scene/event IDs are fabricated here.
