@@ -102,7 +102,7 @@ def main(argv=None):
         map_capacity = map_padding_capacity(event_dir,manifest,args.scene)
     output.mkdir(parents=True, exist_ok=True)
     selection = dict(scene=args.scene, method=args.method, event_ids=[event.event_id for event in events],
-                     events=str(event_dir.resolve()), manifest=str(manifest_path.resolve()),
+                     events=event_dir.name, manifest=manifest_path.name,
                      agents=args.agents, categories=args.category, history_length=args.history_length,
                      control_lower=lower.tolist(), control_upper=upper.tolist(),
                      control_diagonal=list(args.control_diagonal))

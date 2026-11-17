@@ -60,11 +60,11 @@ class SubmissionRunTests(unittest.TestCase):
                         script.main(args)
                         cli.evaluate([testing], manifest, command)
                     for output in outputs:
-                        run = json.loads((output / "run.json").read_text())
+                        run = json.loads((output / "run.json").read_text(encoding="utf-8"))
                         self.assertEqual(run["variant"], variant)
                         self.assertEqual(run["settings"]["reference_source"], source)
                         self.assertEqual(run["settings"]["coefficient_mode"], mode)
-                        self.assertEqual(run["checkpoint"], str(checkpoint.resolve()))
+                        self.assertEqual(run["checkpoint"], checkpoint.name)
                     with np.load(outputs[0] / "testing.npz") as first, np.load(outputs[1] / "testing.npz") as second:
                         for key in ("states", "controls", "weights"):
                             np.testing.assert_allclose(first[key], second[key])

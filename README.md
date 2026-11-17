@@ -45,6 +45,10 @@ python -m unittest discover -s tests -v
 
 ## Reproduction scope
 
-This repository includes the main method, matched reference/coefficient ablations, and a task-adapted KLGame baseline. Original datasets, experiment split manifests, trained checkpoints, hardware software, and paper-result logs are not included. Global-cost/no-map ablations and the complete baseline tables are outside this release. Reproducing the reported results requires the original experimental assets; software tests alone do not verify those results or hardware timing.
+This repository includes the main method, matched reference/coefficient ablations, and a task-adapted KLGame baseline. Original datasets, experiment split manifests, trained checkpoints, hardware software, and paper-result logs are not included. KKT/MPC baselines, Global-cost/no-map ablations, and the complete baseline tables are outside this release. Reproducing the reported results requires the original experimental assets; software tests alone do not verify those results or hardware timing.
 
 See [docs/usage.md](docs/usage.md) for data formats, configuration, and evaluation conventions.
+
+## License
+
+This submission is provided for manuscript review and evaluation under the terms in [LICENSE](LICENSE). Third-party dependencies retain their respective licenses.

@@ -315,7 +315,10 @@ class TrainingAndEntryPointTests(unittest.TestCase):
                         cli.evaluate([test_event], manifest,
                                      SimpleNamespace(method=method, checkpoint=checkpoint, libraries=libraries,
                                                      device="cpu", config=config_path, output=outputs[1], split="test"))
-                    rows = [json.loads((output / "events.json").read_text())[0] for output in outputs]
+                    rows = [
+                        json.loads((output / "events.json").read_text(encoding="utf-8"))[0]
+                        for output in outputs
+                    ]
                     for output, row in zip(outputs, rows):
                         with np.load(output / "testing.npz", allow_pickle=False) as result:
                             np.testing.assert_allclose(result["envelope_radii"], event_envelope_radii(test_event))

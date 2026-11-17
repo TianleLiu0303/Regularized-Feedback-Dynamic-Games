@@ -1,6 +1,6 @@
 # PA-KL trajectory planning
 
-Contextual cost inference, retrieved demonstration references, and proximity-adaptive KL feedback planning for **Regularized Feedback Dynamic Games with Contextual Objective Inference for Multi-Agent Trajectory Planning**. This release includes the main method, matched reference/coefficient ablations, and a task-adapted KLGame comparison. Hardware software and the Global-cost/no-map ablations are not included.
+Contextual cost inference, retrieved demonstration references, and proximity-adaptive KL feedback planning for **Regularized Feedback Dynamic Games with Contextual Objective Inference for Multi-Agent Trajectory Planning**. This release includes the main method, matched reference/coefficient ablations, and a task-adapted KLGame comparison. KKT/MPC baselines, hardware software, and the Global-cost/no-map ablations are not included.
 
 ## Directory
 
@@ -28,7 +28,7 @@ Use Python 3.12 in a virtual environment. From this directory:
 
     python -m pip install -e ".[train,interhub,plot]"
 
-requirements.txt records the tested Windows CPU environment. For those versions, run `python -m pip install -r requirements.txt` before installing this project. The plot extra installs Matplotlib for visualization.
+requirements.txt lists the Windows/Python 3.12 CPU dependency versions, including the core runtime used for the code checks and optional plotting dependencies. To use these versions, run `python -m pip install -r requirements.txt` before installing this project. The plot extra installs Matplotlib for visualization; trajdata and its source-dataset extras are installed separately for cache export.
 
 ## Prepare data
 
@@ -57,6 +57,8 @@ For CAMP/RM, change the directory to `data/camp` or `data/rm`, or supply your ex
     python scripts/train_inverse.py --scene interhub
 
 These are alternative runs. Outputs default to `outputs/<scene>/main/model/`: the final `objective.pt`, `training_log.json`, `training_config.json`, fixed candidates, split manifest, and `libraries/`. `--events`, `--manifest`, and `--output` override paths. Match training and solve agent-count filters, or train on all counts before solving a subset.
+
+The scripts are the primary training and evaluation entry points. The console command `contextual-experiment train` also saves scene, method, history length, control-cost settings, selected event IDs, and `training_config.json`; its library build remains a separate `contextual-experiment library` step. Saved asset locations use basenames rather than machine-specific absolute paths.
 
 Editable dictionaries at the top of train_inverse.py contain optimizer, network, proposal, control-cost, and retrieval parameters. CLI flags override them, for example:
 
@@ -123,7 +125,11 @@ Replace the example event ID with an evaluated event. The trajectory figure show
 
 ## Scope
 
-Real InterHub caches, the original experiment split manifest, trained research checkpoints, and paper-result logs are not bundled. The cache exporter has not been validated against the original research caches. Reproducing the reported numerical tables requires these original assets, including map/route assignments and synthetic scenario definitions. This source release provides training, planning, and evaluation code; its software tests do not verify the paper's reported numerical results or hardware timing.
+Real InterHub caches, the original experiment split manifest, trained research checkpoints, and paper-result logs are not bundled. KKT/MPC baselines, hardware software, and Global-cost/no-map ablations are outside this release. The cache exporter has not been validated against the original research caches. Reproducing the reported numerical tables requires these original assets, including map/route assignments and synthetic scenario definitions. This source release provides training, planning, and evaluation code; its software tests do not verify the paper's reported numerical results or hardware timing.
+
+## License
+
+This submission is provided for manuscript review and evaluation under the terms in [LICENSE](../LICENSE). Third-party dependencies retain their respective licenses.
 
 ## Regression checks
 

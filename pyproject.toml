@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,6 +7,8 @@ name = "contextual-dynamic-game"
 version = "0.4.0"
 description = "Contextual costs, retrieved demonstration references and PA-KL receding-horizon planning."
 readme = "README.md"
+license = "LicenseRef-Review-Evaluation"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.24",

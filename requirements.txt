@@ -1,7 +1,7 @@
-# Verified Windows / Python 3.12 CPU environment; not required for cache export.
+# Windows / Python 3.12 CPU dependencies, including optional plotting.
 # For other platforms use the compatible ranges in pyproject.toml.
 --extra-index-url https://download.pytorch.org/whl/cpu
-filelock==4.1.0
+filelock==4.2.0
 fsspec==2026.9.0
 Jinja2==3.1.6
 MarkupSafe==3.0.4

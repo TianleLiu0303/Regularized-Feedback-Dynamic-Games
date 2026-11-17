@@ -226,7 +226,7 @@ class PublicPipelineTests(unittest.TestCase):
                 self.assertEqual(checkpoint['dimensions']['agents'],3)
                 self.assertEqual(checkpoint['training_groups'],['train2','train3'])
                 if method=='klgame': self.assertEqual(checkpoint['dimensions']['maps'],8)
-                summary=json.loads((output/'summary.json').read_text())
+                summary=json.loads((output/'summary.json').read_text(encoding="utf-8"))
                 self.assertEqual(summary['events'],2)
                 self.assertEqual(set(summary['by_agent_count']),{'2','3'})
                 for n in (2,3):
@@ -280,7 +280,7 @@ class PublicPipelineTests(unittest.TestCase):
                             np.testing.assert_array_equal(data['converged'],final<cfg.tolerance)
                             np.testing.assert_array_equal(data['stop_reason'],
                                 np.where(data['converged'],'tolerance','iteration_limit'))
-                        summary=json.loads((output/'summary.json').read_text())
+                        summary=json.loads((output/'summary.json').read_text(encoding="utf-8"))
                         self.assertEqual(summary['events'],1)
                         for key in ('jADE','jFDE','E_u','P_rel') if domain == 'interhub' else ('D_cost','D_tra','D_par'):
                             self.assertTrue(np.isfinite(summary[key]))

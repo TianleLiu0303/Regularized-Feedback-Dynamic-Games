@@ -120,8 +120,8 @@ def main(argv=None):
     prepare_results(output)
     write_mapping(output / "run.json", dict(
         scene=args.scene, method=args.method, variant=variant, split=args.split, settings=asdict(config),
-        checkpoint=str(checkpoint.resolve()), events=str(event_dir.resolve()),
-        manifest=str(manifest_path.resolve()), libraries=str(library_dir.resolve()) if config.reference_source == "demonstration" else None,
+        checkpoint=checkpoint.name, events=event_dir.name,
+        manifest=manifest_path.name, libraries=library_dir.name if config.reference_source == "demonstration" else None,
         event_ids=[event.event_id for event in events], agents=args.agents, categories=args.category,
         history_length=args.history_length, control_lower=lower.tolist(), control_upper=upper.tolist(),
         control_diagonal=list(args.control_diagonal), effort_diagonal=list(args.effort_diagonal)))

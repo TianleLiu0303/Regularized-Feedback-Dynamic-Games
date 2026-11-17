@@ -1,6 +1,6 @@
 """Prepare interaction data, train contextual costs, and evaluate feedback games."""
 import argparse
-from dataclasses import replace
+from dataclasses import asdict, replace
 import json
 from pathlib import Path
 import sys
@@ -128,12 +128,22 @@ def fit_objective(events, manifest, args):
 
     if (args.output / "objective.pt").exists():
         raise FileExistsError("objective.pt already exists; choose a new --output to preserve the previous model")
+    domains = {event.domain for event in events}
+    if len(domains) != 1:
+        raise ValueError("train one scene family at a time")
+    scene = domains.pop()
     capacity = args.map_capacity
     if args.method == "klgame" and capacity is None:
-        domains = {event.domain for event in events}
-        if len(domains) != 1:
-            raise ValueError("train one scene family at a time")
-        capacity = map_padding_capacity(args.events,manifest,domains.pop())
+        capacity = map_padding_capacity(args.events,manifest,scene)
+    lower, upper = control_bounds(scene)
+    selection = dict(
+        scene=scene, method=args.method, event_ids=[event.event_id for event in events],
+        events=Path(args.events).name, manifest=Path(args.manifest).name,
+        agents=sorted({event.agents for event in events}), categories=None,
+        history_length=events[0].history_length,
+        control_lower=lower.tolist(), control_upper=upper.tolist(),
+        control_diagonal=[1., .25],
+    )
     examples = training_examples(events, manifest, args.proposals, manifest["seed"])
     candidate_dir = args.output / "fixed_candidates"
     candidate_dir.mkdir(exist_ok=True)
@@ -143,8 +153,12 @@ def fit_objective(events, manifest, args):
         max_updates=args.max_updates, model_kind=MODEL_KINDS[args.method],
         device=args.device, seed=manifest["seed"], map_capacity=capacity,
     )
-    logs = train(examples, config, args.output / "objective.pt")
+    logs = train(examples, config, args.output / "objective.pt", metadata=selection)
     write_json(args.output / "training_log.json", logs)
+    write_mapping(args.output / "training_config.json", dict(
+        selection=selection, training=asdict(config), proposals=args.proposals,
+        proposal_noise=[.2, 1.], reference=None, reference_libraries={},
+    ))
 
 
 def evaluate(events, manifest, args):
@@ -159,7 +173,7 @@ def evaluate(events, manifest, args):
     prepare_results(args.output)
     write_json(args.output / "run.json", dict(
         method=args.method, variant=variant_name(config) if args.method == "main" else "klgame",
-        checkpoint=str(args.checkpoint.resolve()), split=args.split, settings=config.__dict__,
+        checkpoint=Path(args.checkpoint).name, split=args.split, settings=config.__dict__,
         event_ids=[event.event_id for event in events]))
     write_mapping(args.output / "manifest.yaml", manifest)
     training_groups = set(manifest["groups"]["train"])
