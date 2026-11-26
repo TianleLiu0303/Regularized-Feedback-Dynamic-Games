@@ -16,7 +16,7 @@ class PlannerConfig:
     horizon: int = 50
     outer_iterations: int = 30
     step_size: float = 0.5
-    tolerance: float = 1.0e-3
+    tolerance: float = 1.0e-2
     temperature: float = 0.99
     reference_source: str = "demonstration"
     coefficient_mode: str = "adaptive"

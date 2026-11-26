@@ -27,7 +27,7 @@ SOLVER_DEFAULTS = {
     "dt": .1,
     "outer_iterations": 30,
     "step_size": .5,
-    "tolerance": 1e-3,  # L2 norm of concatenated state/control changes
+    "tolerance": 1e-2,  # L2 norm of concatenated state/control changes
     "lambda_min": .5,
     "lambda_max": 5.,
     "lambda_sigma": 1.2,
